@@ -92,10 +92,9 @@ module Phash
 
   # Class to store audio file hash and compare to other
   class Audio
-    attr_reader :path
-    attr_reader :length
+    attr_reader :path, :length
 
-    # Path and optional length in seconds to read
+    # Audio path and optional length in seconds to read
     def initialize(path, length = 0)
       @path, @length = path, length
     end
