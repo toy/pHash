@@ -57,13 +57,13 @@ module Phash
     # Get distance between two text hashes using <tt>text_distance</tt>
     def text_distance(hash_a, hash_b)
       matches_length_p = FFI::MemoryPointer.new :int
-      if matches = ph_compare_text_hashes(hash_a.data, hash_a.length, hash_b.data, hash_b.length, matches_length_p)
+      if data = ph_compare_text_hashes(hash_a.data, hash_a.length, hash_b.data, hash_b.length, matches_length_p)
         matches_length = matches_length_p.get_int(0)
         matches_length_p.free
 
-        best_match = matches_length.times.map{ |i| TxtMatch.new(matches + i * TxtMatch.size)[:length] }.inject(:+)
-        matches.free
-        best_match * 2.0 / (hash_a.length + hash_b.length)
+        matches = matches_length.times.map{ |i| TxtMatch.new(data + i * TxtMatch.size) }
+        data.free
+        matches
       end
     end
   end
@@ -86,7 +86,8 @@ module Phash
 
     # Distance from other file
     def distance(other)
-      Phash.text_distance(phash, other.phash)
+      matches = Phash.text_distance(phash, other.phash)
+      matches.map{ |match| match[:length] }.inject(:+) * 2.0 / (phash.length + other.phash.length)
     end
 
     # Cached hash of text
