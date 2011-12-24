@@ -26,7 +26,7 @@ describe :Phash do
   end
 
   describe :Text do
-    let(:paths){ data_dir.glob('*.txt') }
+    let(:paths){ data_dir.glob('*.h') }
     let(:texts){ Phash::Text.for_paths(paths) }
 
     it "should return valid distances" do
