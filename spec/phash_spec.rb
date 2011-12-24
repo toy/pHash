@@ -8,7 +8,7 @@ describe :Phash do
     let(:audios){ Phash::Audio.for_paths(paths) }
 
     it "should return valid distances" do
-      audios.permutation(2) do |a, b|
+      audios.combination(2) do |a, b|
         distance = a.distance(b)
         if a.path.main_name == b.path.main_name
           distance.should > 0.9
@@ -19,7 +19,7 @@ describe :Phash do
     end
 
     it "should return same distance if swapping audios" do
-      audios.permutation(2) do |a, b|
+      audios.combination(2) do |a, b|
         a.distance(b).should == b.distance(a)
       end
     end
@@ -30,7 +30,7 @@ describe :Phash do
     let(:texts){ Phash::Text.for_paths(paths) }
 
     it "should return valid distances" do
-      texts.permutation(2) do |a, b|
+      texts.combination(2) do |a, b|
         distance = a.distance(b)
         if a.path.main_name == b.path.main_name
           distance.should > 1
@@ -41,7 +41,7 @@ describe :Phash do
     end
 
     it "should return same distance if swapping texts" do
-      texts.permutation(2) do |a, b|
+      texts.combination(2) do |a, b|
         a.distance(b).should == b.distance(a)
       end
     end
@@ -52,7 +52,7 @@ describe :Phash do
     let(:videos){ Phash::Video.for_paths(paths) }
 
     it "should return valid distances" do
-      videos.permutation(2) do |a, b|
+      videos.combination(2) do |a, b|
         distance = a.distance(b)
         if a.path.main_name == b.path.main_name
           distance.should > 0.9
@@ -63,7 +63,7 @@ describe :Phash do
     end
 
     it "should return same distance if swapping videos" do
-      videos.permutation(2) do |a, b|
+      videos.combination(2) do |a, b|
         a.distance(b).should == b.distance(a)
       end
     end
