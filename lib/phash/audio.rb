@@ -76,7 +76,7 @@ module Phash
     end
 
     # Get distance between two audio hashes using <tt>ph_audio_distance_ber</tt>
-    def audio_distance(hash_a, hash_b, threshold = 0.25, block_size = 256)
+    def audio_distance_ber(hash_a, hash_b, threshold = 0.25, block_size = 256)
       distance_vector_length_p = FFI::MemoryPointer.new :int
       block_size = [block_size, hash_a.length, hash_b.length].min
       if distance_vector = ph_audio_distance_ber(hash_a.data, hash_a.length, hash_b.data, hash_b.length, threshold, block_size, distance_vector_length_p)
@@ -108,7 +108,7 @@ module Phash
 
     # Distance from other file
     def distance(other)
-      Phash.audio_distance(phash, other.phash).max
+      Phash.audio_distance_ber(phash, other.phash).max
     end
 
     # Cached hash of audio

@@ -33,7 +33,7 @@ module Phash
     end
 
     # Get distance between two video hashes using <tt>ph_dct_videohash_dist</tt>
-    def video_distance(hash_a, hash_b, threshold = 21)
+    def video_dct_distance(hash_a, hash_b, threshold = 21)
       ph_dct_videohash_dist(hash_a.data, hash_a.length, hash_b.data, hash_b.length, threshold)
     end
   end
@@ -56,7 +56,7 @@ module Phash
 
     # Distance from other file
     def distance(other)
-      Phash.video_distance(phash, other.phash)
+      Phash.video_dct_distance(phash, other.phash)
     end
 
     # Cached hash of video

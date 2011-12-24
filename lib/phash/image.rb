@@ -29,7 +29,7 @@ module Phash
     end
 
     # Get distance between two image hashes using <tt>ph_hamming_distance</tt>
-    def image_distance(hash_a, hash_b)
+    def image_hamming_distance(hash_a, hash_b)
       ph_hamming_distance(hash_a, hash_b)
     end
   end
@@ -52,7 +52,7 @@ module Phash
 
     # Distance from other file, for now bit useless thing
     def distance(other)
-      Phash.image_distance(phash, other.phash)
+      Phash.image_hamming_distance(phash, other.phash)
     end
 
     # Cached hash of image
