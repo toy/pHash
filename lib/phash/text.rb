@@ -84,7 +84,7 @@ module Phash
       end
     end
 
-    # Distance from other file
+    # Distance from other file, for now bit useless thing
     def distance(other)
       matches = Phash.text_distance(phash, other.phash)
       matches.map{ |match| match[:length] }.inject(:+) * 2.0 / (phash.length + other.phash.length)
