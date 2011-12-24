@@ -46,4 +46,26 @@ describe :Phash do
       end
     end
   end
+
+  describe :Video do
+    let(:paths){ data_dir.glob('*.mp4') }
+    let(:videos){ Phash::Video.for_paths(paths) }
+
+    it "should return valid distances" do
+      videos.permutation(2) do |a, b|
+        distance = a.distance(b)
+        if a.path.main_name == b.path.main_name
+          distance.should > 0.9
+        else
+          distance.should < 0.5
+        end
+      end
+    end
+
+    it "should return same distance if swapping videos" do
+      videos.permutation(2) do |a, b|
+        a.distance(b).should == b.distance(a)
+      end
+    end
+  end
 end

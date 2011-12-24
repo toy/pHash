@@ -7,4 +7,5 @@ module Phash
 
   autoload :Audio, 'phash/audio'
   autoload :Text, 'phash/text'
+  autoload :Video, 'phash/video'
 end
