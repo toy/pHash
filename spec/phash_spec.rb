@@ -25,6 +25,28 @@ describe :Phash do
     end
   end
 
+  describe :Image do
+    let(:paths){ data_dir.glob('**/*.{jpg,png}') }
+    let(:images){ Phash::Image.for_paths(paths) }
+
+    it "should return valid distances" do
+      images.combination(2) do |a, b|
+        distance = a.distance(b)
+        if a.path.main_name == b.path.main_name
+          distance.should <= 10
+        else
+          distance.should >= 30
+        end
+      end
+    end
+
+    it "should return same distance if swapping videos" do
+      images.combination(2) do |a, b|
+        a.distance(b).should == b.distance(a)
+      end
+    end
+  end
+
   describe :Text do
     let(:paths){ data_dir.glob('*.h') }
     let(:texts){ Phash::Text.for_paths(paths) }
