@@ -24,4 +24,26 @@ describe :Phash do
       end
     end
   end
+
+  describe :Text do
+    let(:paths){ data_dir.glob('*.txt') }
+    let(:texts){ Phash::Text.for_paths(paths) }
+
+    it "should return valid distances" do
+      texts.permutation(2) do |a, b|
+        distance = a.distance(b)
+        if a.path.main_name == b.path.main_name
+          distance.should > 1
+        else
+          distance.should < 0.5
+        end
+      end
+    end
+
+    it "should return same distance if swapping texts" do
+      texts.permutation(2) do |a, b|
+        a.distance(b).should == b.distance(a)
+      end
+    end
+  end
 end
