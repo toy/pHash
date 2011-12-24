@@ -83,7 +83,7 @@ module Phash
         distance_vector_length = distance_vector_length_p.get_int(0)
         distance_vector_length_p.free
 
-        distance = distance_vector.get_array_of_double(0, distance_vector_length).max
+        distance = distance_vector.get_array_of_double(0, distance_vector_length)
         distance_vector.free
         distance
       end
@@ -108,7 +108,7 @@ module Phash
 
     # Distance from other file
     def distance(other)
-      Phash.audio_distance(phash, other.phash)
+      Phash.audio_distance(phash, other.phash).max
     end
 
     # Cached hash of audio
