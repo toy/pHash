@@ -50,7 +50,7 @@ module Phash
   attach_function :ph_audio_distance_ber, [:pointer, :int, :pointer, :int, :float, :int, :pointer], :pointer
 
   class << self
-    class AudioHash # :nodoc:
+    class AudioHash
       attr_reader :data, :length
       def initialize(data, length)
         @data, @length = data, length

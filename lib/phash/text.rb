@@ -36,7 +36,7 @@ module Phash
   attach_function :ph_compare_text_hashes, [:pointer, :int, :pointer, :int, :pointer], :pointer
 
   class << self
-    class TextHash # :nodoc:
+    class TextHash
       attr_reader :data, :length
       def initialize(data, length)
         @data, @length = data, length
