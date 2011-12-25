@@ -50,14 +50,9 @@ module Phash
   attach_function :ph_audio_distance_ber, [:pointer, :int, :pointer, :int, :float, :int, :pointer], :pointer
 
   class << self
-    class AudioHash
-      attr_reader :data, :length
-      def initialize(data, length)
-        @data, @length = data, length
-      end
-    end
+    class AudioHash < HashData; end
 
-    # Read audio file specified by path and optional length using <tt>ph_readaudio</tt> and get its hash data as AudioHash using <tt>ph_audiohash</tt>
+    # Read audio file specified by path and optional length using <tt>ph_readaudio</tt> and get its hash using <tt>ph_audiohash</tt>
     def audio_hash(path, length = 0)
       sample_rate = 8000
       audio_data_length_p = FFI::MemoryPointer.new :int

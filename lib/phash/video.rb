@@ -14,12 +14,7 @@ module Phash
   attach_function :ph_dct_videohash_dist, [:pointer, :int, :pointer, :int, :int], :double
 
   class << self
-    class VideoHash
-      attr_reader :data, :length
-      def initialize(data, length)
-        @data, @length = data, length
-      end
-    end
+    class VideoHash < HashData; end
 
     # Get video hash using <tt>ph_dct_videohash</tt>
     def video_hash(path)

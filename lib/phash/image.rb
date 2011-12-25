@@ -24,6 +24,7 @@ module Phash
       if -1 != ph_dct_imagehash(path.to_s, hash_p)
         hash = hash_p.get_uint64(0)
         hash_p.free
+
         hash
       end
     end
