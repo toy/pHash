@@ -27,6 +27,10 @@ module Phash
     def phash
       @phash ||= compute_phash
     end
+
+    def %(other)
+      similarity(other)
+    end
   end
 
   extend FFI::Library

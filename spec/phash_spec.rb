@@ -6,18 +6,17 @@ describe :Phash do
   shared_examples :similarity do
     it "should return valid similarities" do
       collection.combination(2) do |a, b|
-        similarity = a.similarity(b)
         if a.path.main_name == b.path.main_name
-          similarity.should > 0.8
+          (a % b).should > 0.8
         else
-          similarity.should <= 0.5
+          (a % b).should <= 0.5
         end
       end
     end
 
     it "should return same similarity if swapping instances" do
       collection.combination(2) do |a, b|
-        a.similarity(b).should == b.similarity(a)
+        (a % b).should == (b % a)
       end
     end
   end
