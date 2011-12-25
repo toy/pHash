@@ -29,7 +29,10 @@ module Phash
 
     # Get distance between two video hashes using <tt>ph_dct_videohash_dist</tt>
     def video_dct_distance(hash_a, hash_b, threshold = 21)
-      ph_dct_videohash_dist(hash_a.data, hash_a.length, hash_b.data, hash_b.length, threshold)
+      hash_a.is_a?(VideoHash) or raise ArgumentError.new('hash_a is not a VideoHash')
+      hash_b.is_a?(VideoHash) or raise ArgumentError.new('hash_b is not a VideoHash')
+
+      ph_dct_videohash_dist(hash_a.data, hash_a.length, hash_b.data, hash_b.length, threshold.to_i)
     end
   end
 

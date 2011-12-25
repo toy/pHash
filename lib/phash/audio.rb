@@ -72,9 +72,12 @@ module Phash
 
     # Get distance between two audio hashes using <tt>ph_audio_distance_ber</tt>
     def audio_distance_ber(hash_a, hash_b, threshold = 0.25, block_size = 256)
+      hash_a.is_a?(AudioHash) or raise ArgumentError.new('hash_a is not an AudioHash')
+      hash_b.is_a?(AudioHash) or raise ArgumentError.new('hash_b is not an AudioHash')
+
       distance_vector_length_p = FFI::MemoryPointer.new :int
-      block_size = [block_size, hash_a.length, hash_b.length].min
-      if distance_vector = ph_audio_distance_ber(hash_a.data, hash_a.length, hash_b.data, hash_b.length, threshold, block_size, distance_vector_length_p)
+      block_size = [block_size.to_i, hash_a.length, hash_b.length].min
+      if distance_vector = ph_audio_distance_ber(hash_a.data, hash_a.length, hash_b.data, hash_b.length, threshold.to_f, block_size, distance_vector_length_p)
         distance_vector_length = distance_vector_length_p.get_int(0)
         distance_vector_length_p.free
 

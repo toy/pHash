@@ -51,6 +51,9 @@ module Phash
 
     # Get distance between two text hashes using <tt>text_distance</tt>
     def text_hash_matches(hash_a, hash_b)
+      hash_a.is_a?(TextHash) or raise ArgumentError.new('hash_a is not a TextHash')
+      hash_b.is_a?(TextHash) or raise ArgumentError.new('hash_b is not a TextHash')
+
       matches_length_p = FFI::MemoryPointer.new :int
       if data = ph_compare_text_hashes(hash_a.data, hash_a.length, hash_b.data, hash_b.length, matches_length_p)
         matches_length = matches_length_p.get_int(0)

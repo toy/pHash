@@ -31,6 +31,9 @@ module Phash
 
     # Get distance between two image hashes using <tt>ph_hamming_distance</tt>
     def image_hamming_distance(hash_a, hash_b)
+      hash_a.is_a?(Integer) or raise ArgumentError.new('hash_a is not an Integer')
+      hash_b.is_a?(Integer) or raise ArgumentError.new('hash_b is not an Integer')
+
       ph_hamming_distance(hash_a, hash_b)
     end
   end
