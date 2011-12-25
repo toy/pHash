@@ -86,32 +86,31 @@ module Phash
         distance
       end
     end
+
+    # Get similarity from audio_distance_ber
+    def audio_similarity(hash_a, hash_b)
+      audio_distance_ber(hash_a, hash_b).max
+    end
   end
 
   # Class to store audio file hash and compare to other
-  class Audio
-    attr_reader :path, :length
+  class Audio < FileHash
+    attr_reader :length
 
     # Audio path and optional length in seconds to read
     def initialize(path, length = 0)
       @path, @length = path, length
     end
 
-    # Init multiple audio instances
-    def self.for_paths(paths, length = 0)
-      paths.map do |path|
-        new(path, length)
-      end
+    # Similarity with other audio
+    def similarity(other)
+      Phash.audio_similarity(phash, other.phash)
     end
 
-    # Distance from other file
-    def distance(other)
-      Phash.audio_distance_ber(phash, other.phash).max
-    end
+  private
 
-    # Cached hash of audio
-    def phash
-      @phash ||= Phash.audio_hash(@path, @length)
+    def compute_phash
+      Phash.audio_hash(@path, @length)
     end
   end
 end

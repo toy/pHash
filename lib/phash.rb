@@ -8,6 +8,27 @@ module Phash
     end
   end
 
+  class FileHash
+    attr_reader :path
+
+    # File path
+    def initialize(path)
+      @path = path
+    end
+
+    # Init multiple image instances
+    def self.for_paths(paths, *args)
+      paths.map do |path|
+        new(path, *args)
+      end
+    end
+
+    # Cached hash of text
+    def phash
+      @phash ||= compute_phash
+    end
+  end
+
   extend FFI::Library
 
   ffi_lib(ENV['PHASH_LIB'] || Dir['/{usr,usr/local,opt/local}/lib/libpHash.{dylib,so}'].first)

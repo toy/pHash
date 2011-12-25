@@ -36,32 +36,24 @@ module Phash
 
       ph_hamming_distance(hash_a, hash_b)
     end
+
+    # Get similarity from hamming_distance
+    def image_similarity(hash_a, hash_b)
+      1 - image_hamming_distance(hash_a, hash_b) / 64.0
+    end
   end
 
   # Class to store image file hash and compare to other
-  class Image
-    attr_reader :path
-
-    # File path
-    def initialize(path)
-      @path = path
+  class Image < FileHash
+    # Similarity with other image
+    def similarity(other)
+      Phash.image_similarity(phash, other.phash)
     end
 
-    # Init multiple image instances
-    def self.for_paths(paths)
-      paths.map do |path|
-        new(path)
-      end
-    end
+  private
 
-    # Distance from other file, for now bit useless thing
-    def distance(other)
-      Phash.image_hamming_distance(phash, other.phash)
-    end
-
-    # Cached hash of image
-    def phash
-      @phash ||= Phash.image_hash(@path)
+    def compute_phash
+      Phash.image_hash(@path)
     end
   end
 end

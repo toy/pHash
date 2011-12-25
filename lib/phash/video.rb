@@ -34,32 +34,22 @@ module Phash
 
       ph_dct_videohash_dist(hash_a.data, hash_a.length, hash_b.data, hash_b.length, threshold.to_i)
     end
+
+    # Get similarity from video_dct_distance
+    alias_method :video_similarity, :video_dct_distance
   end
 
   # Class to store video file hash and compare to other
-  class Video
-    attr_reader :path
-
-    # Video path
-    def initialize(path)
-      @path = path
+  class Video < FileHash
+    # Similarity with other video
+    def similarity(other)
+      Phash.video_similarity(phash, other.phash)
     end
 
-    # Init multiple video instances
-    def self.for_paths(paths)
-      paths.map do |path|
-        new(path)
-      end
-    end
+  private
 
-    # Distance from other file
-    def distance(other)
-      Phash.video_dct_distance(phash, other.phash)
-    end
-
-    # Cached hash of video
-    def phash
-      @phash ||= Phash.video_hash(@path)
+    def compute_phash
+      Phash.video_hash(@path)
     end
   end
 end

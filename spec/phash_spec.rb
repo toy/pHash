@@ -3,75 +3,42 @@ require File.dirname(__FILE__) + '/spec_helper.rb'
 describe :Phash do
   data_dir = FSPath(__FILE__).dirname / 'data'
 
-  shared_examples :swapping do
-    it "should return same distance if swapping instances" do
+  shared_examples :similarity do
+    it "should return valid similarities" do
       collection.combination(2) do |a, b|
-        a.distance(b).should == b.distance(a)
+        similarity = a.similarity(b)
+        if a.path.main_name == b.path.main_name
+          similarity.should > 0.8
+        else
+          similarity.should <= 0.5
+        end
+      end
+    end
+
+    it "should return same similarity if swapping instances" do
+      collection.combination(2) do |a, b|
+        a.similarity(b).should == b.similarity(a)
       end
     end
   end
 
   describe :Audio do
     let(:collection){ Phash::Audio.for_paths(data_dir.glob('*.mp3')) }
-    include_examples :swapping
-
-    it "should return valid distances" do
-      collection.combination(2) do |a, b|
-        distance = a.distance(b)
-        if a.path.main_name == b.path.main_name
-          distance.should > 0.9
-        else
-          distance.should < 0.5
-        end
-      end
-    end
+    include_examples :similarity
   end
 
   describe :Image do
     let(:collection){ Phash::Image.for_paths(data_dir.glob('**/*.{jpg,png}')) }
-    include_examples :swapping
-
-    it "should return valid distances" do
-      collection.combination(2) do |a, b|
-        distance = a.distance(b)
-        if a.path.main_name == b.path.main_name
-          distance.should <= 10
-        else
-          distance.should >= 30
-        end
-      end
-    end
+    include_examples :similarity
   end
 
   describe :Text do
-    let(:collection){ Phash::Text.for_paths(data_dir.glob('*.h')) }
-    include_examples :swapping
-
-    it "should return valid distances" do
-      collection.combination(2) do |a, b|
-        distance = a.distance(b)
-        if a.path.main_name == b.path.main_name
-          distance.should > 1
-        else
-          distance.should < 0.5
-        end
-      end
-    end
+    let(:collection){ Phash::Text.for_paths(data_dir.glob('*.txt')) }
+    include_examples :similarity
   end
 
   describe :Video do
     let(:collection){ Phash::Video.for_paths(data_dir.glob('*.mp4')) }
-    include_examples :swapping
-
-    it "should return valid distances" do
-      collection.combination(2) do |a, b|
-        distance = a.distance(b)
-        if a.path.main_name == b.path.main_name
-          distance.should > 0.9
-        else
-          distance.should < 0.5
-        end
-      end
-    end
+    include_examples :similarity
   end
 end

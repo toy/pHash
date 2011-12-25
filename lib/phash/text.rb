@@ -64,33 +64,37 @@ module Phash
         matches
       end
     end
+
+    def text_similarity(hash_a, hash_b)
+      matches = text_hash_matches(hash_a, hash_b)
+      # p [hash_a.length, hash_b.length, matches.length]
+      matched_a = Array.new(hash_a.length)
+      matched_b = Array.new(hash_b.length)
+      matches.each do |match|
+        index_a = match[:index_a]
+        index_b = match[:index_b]
+        match[:length].times do |i|
+          matched_a[index_a + i] = true
+          matched_b[index_b + i] = true
+        end
+      end
+      coverage_a = matched_a.nitems / hash_a.length.to_f
+      coverage_b = matched_b.nitems / hash_b.length.to_f
+      (coverage_a + coverage_b) * 0.5
+    end
   end
 
   # Class to store text file hash and compare to other
-  class Text
-    attr_reader :path
-
-    # File path
-    def initialize(path)
-      @path = path
-    end
-
-    # Init multiple text instances
-    def self.for_paths(paths)
-      paths.map do |path|
-        new(path)
-      end
-    end
-
+  class Text < FileHash
     # Distance from other file, for now bit useless thing
-    def distance(other)
-      matches = Phash.text_hash_matches(phash, other.phash)
-      matches.map{ |match| match[:length] }.inject(:+) * 2.0 / (phash.length + other.phash.length)
+    def similarity(other)
+      Phash.text_similarity(phash, other.phash)
     end
 
-    # Cached hash of text
-    def phash
-      @phash ||= Phash.text_hash(@path)
+  private
+
+    def compute_phash
+      Phash.text_hash(@path)
     end
   end
 end
