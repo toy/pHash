@@ -6,6 +6,10 @@ Interface to [pHash](http://pHash.org/).
 
     gem install pHash
 
+Audio hash functions needs to be compiled with C linkage, so if you get `FFI::NotFoundError` check names of methods in `libpHash`.
+
+Patch for pHash 0.9.4 is in audiophash.diff
+
 ## Usage
 
 ## Copyright
