@@ -88,8 +88,8 @@ module Phash
     end
 
     # Get similarity from audio_distance_ber
-    def audio_similarity(hash_a, hash_b)
-      audio_distance_ber(hash_a, hash_b).max
+    def audio_similarity(hash_a, hash_b, *args)
+      audio_distance_ber(hash_a, hash_b, *args).max
     end
   end
 
@@ -103,8 +103,8 @@ module Phash
     end
 
     # Similarity with other audio
-    def similarity(other)
-      Phash.audio_similarity(phash, other.phash)
+    def similarity(other, *args)
+      Phash.audio_similarity(phash, other.phash, *args)
     end
 
   private

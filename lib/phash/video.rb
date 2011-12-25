@@ -42,8 +42,8 @@ module Phash
   # Class to store video file hash and compare to other
   class Video < FileHash
     # Similarity with other video
-    def similarity(other)
-      Phash.video_similarity(phash, other.phash)
+    def similarity(other, *args)
+      Phash.video_similarity(phash, other.phash, *args)
     end
 
   private
