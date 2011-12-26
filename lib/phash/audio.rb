@@ -14,7 +14,7 @@ module Phash
   #
   # float* ph_readaudio(const char *filename, int sr, int channels, float *sigbuf, int &buflen, const float nbsecs = 0);
   #
-  attach_function :ph_readaudio, [:string, :int, :int, :pointer, :pointer, :float], :pointer
+  attach_function :ph_readaudio, [:string, :int, :int, :pointer, :pointer, :float], :pointer, :blocking => true
 
   # audio hash calculation
   # purpose: hash calculation for each frame in the buffer.
@@ -31,7 +31,7 @@ module Phash
   #
   # uint32_t* ph_audiohash(float *buf, int nbbuf, const int sr, int &nbframes);
   #
-  attach_function :ph_audiohash, [:pointer, :int, :int, :pointer], :pointer
+  attach_function :ph_audiohash, [:pointer, :int, :int, :pointer], :pointer, :blocking => true
 
   # distance function between two hashes
   #
@@ -47,7 +47,7 @@ module Phash
   #
   # double* ph_audio_distance_ber(uint32_t *hash_a, const int Na, uint32_t *hash_b, const int Nb, const float threshold, const int block_size, int &Nc);
   #
-  attach_function :ph_audio_distance_ber, [:pointer, :int, :pointer, :int, :float, :int, :pointer], :pointer
+  attach_function :ph_audio_distance_ber, [:pointer, :int, :pointer, :int, :float, :int, :pointer], :pointer, :blocking => true
 
   class << self
     class AudioHash < HashData; end

@@ -5,13 +5,13 @@ module Phash
   #
   # ulong64* ph_dct_videohash(const char *filename, int &Length);
   #
-  attach_function :ph_dct_videohash, [:string, :pointer], :pointer
+  attach_function :ph_dct_videohash, [:string, :pointer], :pointer, :blocking => true
 
   # no info in pHash.h
   #
   # double ph_dct_videohash_dist(ulong64 *hashA, int N1, ulong64 *hashB, int N2, int threshold=21);
   #
-  attach_function :ph_dct_videohash_dist, [:pointer, :int, :pointer, :int, :int], :double
+  attach_function :ph_dct_videohash_dist, [:pointer, :int, :pointer, :int, :int], :double, :blocking => true
 
   class << self
     class VideoHash < HashData; end

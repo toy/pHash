@@ -9,13 +9,13 @@ module Phash
   #
   # int ph_dct_imagehash(const char* file, ulong64 &hash);
   #
-  attach_function :ph_dct_imagehash, [:string, :pointer], :int
+  attach_function :ph_dct_imagehash, [:string, :pointer], :int, :blocking => true
 
   # no info in pHash.h
   #
   # int ph_hamming_distance(const ulong64 hash1,const ulong64 hash2);
   #
-  attach_function :ph_hamming_distance, [:uint64, :uint64], :int
+  attach_function :ph_hamming_distance, [:uint64, :uint64], :int, :blocking => true
 
   class << self
     # Get image file hash using <tt>ph_dct_imagehash</tt>

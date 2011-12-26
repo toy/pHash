@@ -20,7 +20,7 @@ module Phash
   #
   # TxtHashPoint* ph_texthash(const char *filename, int *nbpoints);
   #
-  attach_function :ph_texthash, [:string, :pointer], :pointer
+  attach_function :ph_texthash, [:string, :pointer], :pointer, :blocking => true
 
   # compare 2 text hashes
   #
@@ -33,7 +33,7 @@ module Phash
   #
   # TxtMatch* ph_compare_text_hashes(TxtHashPoint *hash1, int N1, TxtHashPoint *hash2, int N2, int *nbmatches);
   #
-  attach_function :ph_compare_text_hashes, [:pointer, :int, :pointer, :int, :pointer], :pointer
+  attach_function :ph_compare_text_hashes, [:pointer, :int, :pointer, :int, :pointer], :pointer, :blocking => true
 
   class << self
     class TextHash < HashData; end
