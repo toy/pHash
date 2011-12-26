@@ -49,7 +49,12 @@ module Phash
   #
   attach_function :ph_audio_distance_ber, [:pointer, :int, :pointer, :int, :float, :int, :pointer], :pointer, :blocking => true
 
-  class AudioHash < HashData; end
+  class AudioHash < HashData
+    def similarity(other, *args)
+      Phash.audio_similarity(self, other, *args)
+    end
+  end
+
   class << self
     # Read audio file specified by path and optional length using <tt>ph_readaudio</tt> and get its hash using <tt>ph_audiohash</tt>
     def audio_hash(path, length = 0)
@@ -100,13 +105,6 @@ module Phash
     def initialize(path, length = 0)
       @path, @length = path, length
     end
-
-    # Similarity with other audio
-    def similarity(other, *args)
-      Phash.audio_similarity(phash, other.phash, *args)
-    end
-
-  private
 
     def compute_phash
       Phash.audio_hash(@path, @length)

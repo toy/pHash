@@ -35,7 +35,12 @@ module Phash
   #
   attach_function :ph_compare_text_hashes, [:pointer, :int, :pointer, :int, :pointer], :pointer, :blocking => true
 
-  class TextHash < HashData; end
+  class TextHash < HashData
+    def similarity(other)
+      Phash.text_similarity(self, other)
+    end
+  end
+
   class << self
     # Get text file hash using <tt>ph_texthash</tt>
     def text_hash(path)
@@ -85,13 +90,6 @@ module Phash
 
   # Class to store text file hash and compare to other
   class Text < FileHash
-    # Distance from other file, for now bit useless thing
-    def similarity(other)
-      Phash.text_similarity(phash, other.phash)
-    end
-
-  private
-
     def compute_phash
       Phash.text_hash(@path)
     end

@@ -28,9 +28,11 @@ module Phash
       @phash ||= compute_phash
     end
 
-    def %(other)
-      similarity(other)
+    # Similarity with other phash
+    def similarity(other, *args)
+      phash.similarity(other.phash, *args)
     end
+    alias_method :%, :similarity
   end
 
   extend FFI::Library

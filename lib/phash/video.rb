@@ -13,7 +13,12 @@ module Phash
   #
   attach_function :ph_dct_videohash_dist, [:pointer, :int, :pointer, :int, :int], :double, :blocking => true
 
-  class VideoHash < HashData; end
+  class VideoHash < HashData
+    def similarity(other, *args)
+      Phash.video_similarity(self, other, *args)
+    end
+  end
+
   class << self
     # Get video hash using <tt>ph_dct_videohash</tt>
     def video_hash(path)
@@ -40,13 +45,6 @@ module Phash
 
   # Class to store video file hash and compare to other
   class Video < FileHash
-    # Similarity with other video
-    def similarity(other, *args)
-      Phash.video_similarity(phash, other.phash, *args)
-    end
-
-  private
-
     def compute_phash
       Phash.video_hash(@path)
     end

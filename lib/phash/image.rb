@@ -17,6 +17,12 @@ module Phash
   #
   attach_function :ph_hamming_distance, [:uint64, :uint64], :int, :blocking => true
 
+  class ImageHash < HashData
+    def similarity(other)
+      Phash.image_similarity(self, other)
+    end
+  end
+
   class << self
     # Get image file hash using <tt>ph_dct_imagehash</tt>
     def image_hash(path)
@@ -25,16 +31,16 @@ module Phash
         hash = hash_p.get_uint64(0)
         hash_p.free
 
-        hash
+        ImageHash.new(hash)
       end
     end
 
     # Get distance between two image hashes using <tt>ph_hamming_distance</tt>
     def image_hamming_distance(hash_a, hash_b)
-      hash_a.is_a?(Integer) or raise ArgumentError.new('hash_a is not an Integer')
-      hash_b.is_a?(Integer) or raise ArgumentError.new('hash_b is not an Integer')
+      hash_a.is_a?(ImageHash) or raise ArgumentError.new('hash_a is not an Integer')
+      hash_b.is_a?(ImageHash) or raise ArgumentError.new('hash_b is not an Integer')
 
-      ph_hamming_distance(hash_a, hash_b)
+      ph_hamming_distance(hash_a.data, hash_b.data)
     end
 
     # Get similarity from hamming_distance
@@ -45,13 +51,6 @@ module Phash
 
   # Class to store image file hash and compare to other
   class Image < FileHash
-    # Similarity with other image
-    def similarity(other)
-      Phash.image_similarity(phash, other.phash)
-    end
-
-  private
-
     def compute_phash
       Phash.image_hash(@path)
     end
