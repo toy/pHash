@@ -35,9 +35,8 @@ module Phash
   #
   attach_function :ph_compare_text_hashes, [:pointer, :int, :pointer, :int, :pointer], :pointer, :blocking => true
 
+  class TextHash < HashData; end
   class << self
-    class TextHash < HashData; end
-
     # Get text file hash using <tt>ph_texthash</tt>
     def text_hash(path)
       hash_data_length_p = FFI::MemoryPointer.new :int

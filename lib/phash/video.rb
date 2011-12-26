@@ -13,9 +13,8 @@ module Phash
   #
   attach_function :ph_dct_videohash_dist, [:pointer, :int, :pointer, :int, :int], :double, :blocking => true
 
+  class VideoHash < HashData; end
   class << self
-    class VideoHash < HashData; end
-
     # Get video hash using <tt>ph_dct_videohash</tt>
     def video_hash(path)
       hash_data_length_p = FFI::MemoryPointer.new :int

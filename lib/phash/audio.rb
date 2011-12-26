@@ -49,9 +49,8 @@ module Phash
   #
   attach_function :ph_audio_distance_ber, [:pointer, :int, :pointer, :int, :float, :int, :pointer], :pointer, :blocking => true
 
+  class AudioHash < HashData; end
   class << self
-    class AudioHash < HashData; end
-
     # Read audio file specified by path and optional length using <tt>ph_readaudio</tt> and get its hash using <tt>ph_audiohash</tt>
     def audio_hash(path, length = 0)
       sample_rate = 8000
