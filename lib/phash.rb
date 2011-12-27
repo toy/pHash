@@ -8,6 +8,16 @@ module Phash
     end
   end
 
+  class HashData < Data
+    def similarity(other, *args)
+      Phash.send("#{self.class.hash_type}_similarity", self, other, *args)
+    end
+
+    def self.hash_type
+      @hash_type ||= self.name.split('::').last.sub(/Hash$/, '').downcase
+    end
+  end
+
   class FileHash
     attr_reader :path
 

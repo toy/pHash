@@ -35,12 +35,6 @@ module Phash
   #
   attach_function :ph_compare_text_hashes, [:pointer, :int, :pointer, :int, :pointer], :pointer, :blocking => true
 
-  class TextHash < Data
-    def similarity(other)
-      Phash.text_similarity(self, other)
-    end
-  end
-
   class << self
     # Get text file hash using <tt>ph_texthash</tt>
     def text_hash(path)
@@ -85,6 +79,10 @@ module Phash
       coverage_b = matched_b.nitems / hash_b.length.to_f
       (coverage_a + coverage_b) * 0.5
     end
+  end
+
+  # Class to store text hash and compare to other
+  class TextHash < HashData
   end
 
   # Class to store text file hash and compare to other

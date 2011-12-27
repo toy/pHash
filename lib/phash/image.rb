@@ -17,12 +17,6 @@ module Phash
   #
   attach_function :ph_hamming_distance, [:uint64, :uint64], :int, :blocking => true
 
-  class ImageHash < Data
-    def similarity(other)
-      Phash.image_similarity(self, other)
-    end
-  end
-
   class << self
     # Get image file hash using <tt>ph_dct_imagehash</tt>
     def image_hash(path)
@@ -47,6 +41,10 @@ module Phash
     def image_similarity(hash_a, hash_b)
       1 - image_hamming_distance(hash_a, hash_b) / 64.0
     end
+  end
+
+  # Class to store image hash and compare to other
+  class ImageHash < HashData
   end
 
   # Class to store image file hash and compare to other

@@ -49,12 +49,6 @@ module Phash
   #
   attach_function :ph_audio_distance_ber, [:pointer, :int, :pointer, :int, :float, :int, :pointer], :pointer, :blocking => true
 
-  class AudioHash < Data
-    def similarity(other, *args)
-      Phash.audio_similarity(self, other, *args)
-    end
-  end
-
   class << self
     DEFAULT_SAMPLE_RATE = 8000
 
@@ -111,6 +105,10 @@ module Phash
     def audio_similarity(hash_a, hash_b, *args)
       audio_distance_ber(hash_a, hash_b, *args).max
     end
+  end
+
+  # Class to store audio hash and compare to other
+  class AudioHash < HashData
   end
 
   # Class to store audio file hash and compare to other
