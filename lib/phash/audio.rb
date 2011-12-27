@@ -49,28 +49,44 @@ module Phash
   #
   attach_function :ph_audio_distance_ber, [:pointer, :int, :pointer, :int, :float, :int, :pointer], :pointer, :blocking => true
 
-  class AudioHash < HashData
+  class AudioHash < Data
     def similarity(other, *args)
       Phash.audio_similarity(self, other, *args)
     end
   end
 
   class << self
-    # Read audio file specified by path and optional length using <tt>ph_readaudio</tt> and get its hash using <tt>ph_audiohash</tt>
-    def audio_hash(path, length = 0)
-      sample_rate = 8000
+    DEFAULT_SAMPLE_RATE = 8000
+
+    # Read audio file specified by path and optional length using <tt>ph_readaudio</tt>
+    def audio_data(path, length = 0, sample_rate = nil)
+      sample_rate ||= DEFAULT_SAMPLE_RATE
       audio_data_length_p = FFI::MemoryPointer.new :int
       if audio_data = ph_readaudio(path.to_s, sample_rate, 1, nil, audio_data_length_p, length.to_f)
         audio_data_length = audio_data_length_p.get_int(0)
         audio_data_length_p.free
 
-        hash_data_length_p = FFI::MemoryPointer.new :int
-        if hash_data = ph_audiohash(audio_data, audio_data_length, sample_rate, hash_data_length_p)
-          hash_data_length = hash_data_length_p.get_int(0)
-          hash_data_length_p.free
+        Data.new(audio_data, audio_data_length)
+      end
+    end
 
-          AudioHash.new(hash_data, hash_data_length)
-        end
+    # Get hash of audio data using <tt>ph_audiohash</tt>
+    def audio_data_hash(audio_data, sample_rate = nil)
+      sample_rate ||= DEFAULT_SAMPLE_RATE
+      hash_data_length_p = FFI::MemoryPointer.new :int
+      if hash_data = ph_audiohash(audio_data.data, audio_data.length, sample_rate, hash_data_length_p)
+        hash_data_length = hash_data_length_p.get_int(0)
+        hash_data_length_p.free
+
+        AudioHash.new(hash_data, hash_data_length)
+      end
+    end
+
+    # Use <tt>audio_data</tt> and <tt>audio_data_hash</tt> to compute hash for file at path, specify max length in seconds to read
+    def audio_hash(path, length = 0, sample_rate = nil)
+      sample_rate ||= DEFAULT_SAMPLE_RATE
+      if audio_data = audio_data(path, length, sample_rate)
+        audio_data_hash(audio_data, sample_rate)
       end
     end
 

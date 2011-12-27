@@ -17,7 +17,7 @@ module Phash
   #
   attach_function :ph_hamming_distance, [:uint64, :uint64], :int, :blocking => true
 
-  class ImageHash < HashData
+  class ImageHash < Data
     def similarity(other)
       Phash.image_similarity(self, other)
     end

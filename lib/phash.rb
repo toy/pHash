@@ -1,7 +1,7 @@
 require 'ffi'
 
 module Phash
-  class HashData
+  class Data
     attr_reader :data, :length
     def initialize(data, length = nil)
       @data, @length = data, length

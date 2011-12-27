@@ -35,7 +35,7 @@ module Phash
   #
   attach_function :ph_compare_text_hashes, [:pointer, :int, :pointer, :int, :pointer], :pointer, :blocking => true
 
-  class TextHash < HashData
+  class TextHash < Data
     def similarity(other)
       Phash.text_similarity(self, other)
     end
