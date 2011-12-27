@@ -28,11 +28,19 @@ module Phash
       @phash ||= compute_phash
     end
 
+    def compute_phash
+      Phash.send("#{self.class.hash_type}_hash", @path)
+    end
+
     # Similarity with other phash
     def similarity(other, *args)
       phash.similarity(other.phash, *args)
     end
     alias_method :%, :similarity
+
+    def self.hash_type
+      @hash_type ||= self.name.split('::').last.downcase
+    end
   end
 
   extend FFI::Library

@@ -45,8 +45,5 @@ module Phash
 
   # Class to store video file hash and compare to other
   class Video < FileHash
-    def compute_phash
-      Phash.video_hash(@path)
-    end
   end
 end

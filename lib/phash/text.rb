@@ -89,8 +89,5 @@ module Phash
 
   # Class to store text file hash and compare to other
   class Text < FileHash
-    def compute_phash
-      Phash.text_hash(@path)
-    end
   end
 end

@@ -51,8 +51,5 @@ module Phash
 
   # Class to store image file hash and compare to other
   class Image < FileHash
-    def compute_phash
-      Phash.image_hash(@path)
-    end
   end
 end
