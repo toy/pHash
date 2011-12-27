@@ -77,7 +77,7 @@ module Phash
     end
 
     # Use <tt>audio_data</tt> and <tt>audio_data_hash</tt> to compute hash for file at path, specify max length in seconds to read
-    def audio_hash(path, length = 0, sample_rate = nil)
+    def audio_hash(path, length = nil, sample_rate = nil)
       sample_rate ||= DEFAULT_SAMPLE_RATE
       if audio_data = audio_data(path, length, sample_rate)
         audio_data_hash(audio_data, sample_rate)
@@ -116,12 +116,12 @@ module Phash
     attr_reader :length
 
     # Audio path and optional length in seconds to read
-    def initialize(path, length = 0)
-      @path, @length = path, length
+    def initialize(path, length = nil, sample_rate = nil)
+      @path, @length, @sample_rate = path, length, sample_rate
     end
 
     def compute_phash
-      Phash.audio_hash(@path, @length)
+      Phash.audio_hash(@path, @length, @sample_rate)
     end
   end
 end
