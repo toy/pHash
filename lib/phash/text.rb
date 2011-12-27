@@ -71,7 +71,6 @@ module Phash
 
     def text_similarity(hash_a, hash_b)
       matches = text_hash_matches(hash_a, hash_b)
-      # p [hash_a.length, hash_b.length, matches.length]
       matched_a = Array.new(hash_a.length)
       matched_b = Array.new(hash_b.length)
       matches.each do |match|
