@@ -55,7 +55,7 @@ module Phash
 
   extend FFI::Library
 
-  ffi_lib(ENV['PHASH_LIB'] || Dir['/{usr,usr/local,opt/local}/lib/libpHash.{dylib,so}'].first)
+  ffi_lib ENV.fetch('PHASH_LIB','pHash')
 
   autoload :Audio, 'phash/audio'
   autoload :Image, 'phash/image'
