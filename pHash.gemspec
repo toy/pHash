@@ -15,6 +15,8 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
+  s.add_dependency 'ffi', '~> 1.0'
+
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'fspath'
 end
