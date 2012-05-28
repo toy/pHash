@@ -8,6 +8,11 @@ Interface to [pHash](http://pHash.org/).
 
 Audio hash functions needs to be compiled with C linkage, so if you get `FFI::NotFoundError` check names of methods in `libpHash`. Tiny patch for pHash 0.9.4 is in `audiophash.diff`.
 
+## Dependencies
+
+* [pHash](http://www.phash.org/download/)
+* [ffi](https://github.com/ffi/ffi#readme) ~> 1.0
+
 ## Usage
 
 Compare two mp3s:
