@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'pHash'
-  s.version     = '1.1.1'
+  s.version     = '1.1.2'
   s.summary     = %q{Use pHash with ruby}
   s.homepage    = "http://github.com/toy/#{s.name}"
   s.authors     = ['Ivan Kuchin']
