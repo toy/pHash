@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{Use pHash with ruby}
   s.homepage    = "http://github.com/toy/#{s.name}"
   s.authors     = ['Ivan Kuchin']
-  s.license     = 'MIT'
+  s.license     = 'GPLv3'
 
   s.rubyforge_project = s.name
 
