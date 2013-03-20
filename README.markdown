@@ -55,6 +55,6 @@ Texts:
 
 ## Copyright
 
-Copyright (c) 2011 Ivan Kuchin.
+Copyright (c) 2011-2013 Ivan Kuchin.
 Released under the GPLv3 as required by license of underlying pHash library.
 See LICENSE.txt for details.
