@@ -6,6 +6,8 @@ Interface to [pHash](http://pHash.org/).
 
     gem install pHash
 
+You can specify path to pHash library explicitly using environment variable like `PHASH_LIB=/opt/local/lib/libpHash.dylib`.
+
 Audio hash functions needs to be compiled with C linkage, so if you get `FFI::NotFoundError` check names of methods in `libpHash`. Tiny patch for pHash 0.9.4 is in `audiophash.diff`.
 
 ## Dependencies
