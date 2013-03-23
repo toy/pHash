@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe :Phash do
-  data_dir = FSPath(__FILE__).dirname / 'data'
+  include SpecHelpers
 
   shared_examples :similarity do
     it "should return valid similarities" do
       collection.combination(2) do |a, b|
-        if a.path.main_name == b.path.main_name
+        if main_name(a.path) == main_name(b.path)
           (a % b).should > 0.8
         else
           (a % b).should <= 0.5
@@ -22,22 +22,22 @@ describe :Phash do
   end
 
   describe :Audio do
-    let(:collection){ Phash::Audio.for_paths(data_dir.glob('*.mp3')) }
+    let(:collection){ Phash::Audio.for_paths filenames('*.mp3') }
     include_examples :similarity
   end
 
   describe :Image do
-    let(:collection){ Phash::Image.for_paths(data_dir.glob('**/*.{jpg,png}')) }
+    let(:collection){ Phash::Image.for_paths filenames('**/*.{jpg,png}') }
     include_examples :similarity
   end
 
   describe :Text do
-    let(:collection){ Phash::Text.for_paths(data_dir.glob('*.txt')) }
+    let(:collection){ Phash::Text.for_paths filenames('*.txt') }
     include_examples :similarity
   end
 
   describe :Video do
-    let(:collection){ Phash::Video.for_paths(data_dir.glob('*.mp4')) }
+    let(:collection){ Phash::Video.for_paths filenames('*.mp4') }
     include_examples :similarity
   end
 end

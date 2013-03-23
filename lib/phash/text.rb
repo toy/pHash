@@ -75,8 +75,8 @@ module Phash
           matched_b[index_b + i] = true
         end
       end
-      coverage_a = matched_a.nitems / hash_a.length.to_f
-      coverage_b = matched_b.nitems / hash_b.length.to_f
+      coverage_a = matched_a.compact.length / hash_a.length.to_f
+      coverage_b = matched_b.compact.length / hash_b.length.to_f
       (coverage_a + coverage_b) * 0.5
     end
   end
