@@ -35,6 +35,8 @@ module Phash
   #
   attach_function :ph_compare_text_hashes, [:pointer, :int, :pointer, :int, :pointer], :pointer, :blocking => true
 
+  attach_function :free, [:pointer], :void
+
   class << self
     # Get text file hash using <tt>ph_texthash</tt>
     def text_hash(path)
@@ -48,7 +50,7 @@ module Phash
     end
 
     # Get distance between two text hashes using <tt>text_distance</tt>
-    def text_hash_matches(hash_a, hash_b)
+    def text_similarity(hash_a, hash_b)
       hash_a.is_a?(TextHash) or raise ArgumentError.new('hash_a is not a TextHash')
       hash_b.is_a?(TextHash) or raise ArgumentError.new('hash_b is not a TextHash')
 
@@ -58,26 +60,24 @@ module Phash
         matches_length_p.free
 
         matches = matches_length.times.map{ |i| TxtMatch.new(data + i * TxtMatch.size) }
-        data.free
-        matches
-      end
-    end
 
-    def text_similarity(hash_a, hash_b)
-      matches = text_hash_matches(hash_a, hash_b)
-      matched_a = Array.new(hash_a.length)
-      matched_b = Array.new(hash_b.length)
-      matches.each do |match|
-        index_a = match[:index_a]
-        index_b = match[:index_b]
-        match[:length].times do |i|
-          matched_a[index_a + i] = true
-          matched_b[index_b + i] = true
+        matched_a = Array.new(hash_a.length)
+        matched_b = Array.new(hash_b.length)
+        matches.each do |match|
+          index_a = match[:index_a]
+          index_b = match[:index_b]
+          match[:length].times do |i|
+            matched_a[index_a + i] = true
+            matched_b[index_b + i] = true
+          end
         end
+        coverage_a = matched_a.compact.length / hash_a.length.to_f
+        coverage_b = matched_b.compact.length / hash_b.length.to_f
+
+        similarity = (coverage_a + coverage_b) * 0.5
+        free(data)
+        similarity
       end
-      coverage_a = matched_a.compact.length / hash_a.length.to_f
-      coverage_b = matched_b.compact.length / hash_b.length.to_f
-      (coverage_a + coverage_b) * 0.5
     end
   end
 

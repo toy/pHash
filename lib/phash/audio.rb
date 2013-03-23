@@ -49,6 +49,8 @@ module Phash
   #
   attach_function :ph_audio_distance_ber, [:pointer, :int, :pointer, :int, :float, :int, :pointer], :pointer, :blocking => true
 
+  attach_function :free, [:pointer], :void
+
   class << self
     DEFAULT_SAMPLE_RATE = 8000
 
@@ -96,7 +98,7 @@ module Phash
         distance_vector_length_p.free
 
         distance = distance_vector.get_array_of_double(0, distance_vector_length)
-        distance_vector.free
+        free(distance_vector)
         distance
       end
     end
