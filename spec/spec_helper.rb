@@ -1,5 +1,5 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-Bundler.require
+require 'rspec'
 require 'phash'
 
 module SpecHelpers
