@@ -36,8 +36,8 @@ describe :Phash do
     include_examples :similarity
   end
 
-  describe :Video do
-    let(:collection){ Phash::Video.for_paths filenames('*.mp4') }
-    include_examples :similarity
-  end
+  # describe :Video do
+  #   let(:collection){ Phash::Video.for_paths filenames('*.mp4') }
+  #   include_examples :similarity
+  # end
 end
