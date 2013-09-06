@@ -4,7 +4,8 @@ module Phash
   class Data
     attr_reader :data, :length
     def initialize(data, length = nil)
-      @data, @length = data, length
+      @data = data
+      @length = length if length
     end
   end
 
