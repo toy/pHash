@@ -10,6 +10,8 @@ You can specify path to pHash library explicitly using environment variable like
 
 Audio hash functions needs to be compiled with C linkage, so if you get `FFI::NotFoundError` check names of methods in `libpHash`. Tiny patch for pHash 0.9.4 is in `audiophash.diff`.
 
+Video hash needs [patched pHash 0.9.6](https://github.com/hszcg/pHash-0.9.6) to fit into latest ffmpeg changes, This patch resolved the issue about [Segmentation Fault error when trying to compare two videos with pHash library and its ruby bindings](http://stackoverflow.com/q/23414036/96823), please checkout the code and build from source if you want to use Video hash.
+
 ## Dependencies
 
 * [pHash](http://www.phash.org/download/)
