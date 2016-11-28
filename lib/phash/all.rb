@@ -1,3 +1,4 @@
-%w[audio image text video].each do |type|
-  require "phash/#{type}"
-end
+require 'phash/audio'
+require 'phash/image'
+require 'phash/text'
+require 'phash/video'
