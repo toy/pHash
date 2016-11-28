@@ -1,43 +1,30 @@
-require File.dirname(__FILE__) + '/spec_helper.rb'
+require 'phash'
 
-describe :Phash do
-  include SpecHelpers
+{
+  Phash::Audio => '*.mp3',
+  Phash::Image => '**/*.{jpg,png}',
+  Phash::Text => '*.txt',
+  Phash::Video => '*.mp4',
+}.each do |klass, glob|
+  describe klass do
+    filenames = Dir.glob(File.join(File.dirname(__FILE__), 'data', glob))
 
-  shared_examples :similarity do
-    it "should return valid similarities" do
-      collection.combination(2) do |a, b|
-        if main_name(a.path) == main_name(b.path)
-          (a % b).should > 0.8
-        else
-          (a % b).should <= 0.5
+    klass.for_paths(filenames).combination(2) do |a, b|
+      similar = a.path.split('-')[0] == b.path.split('-')[0]
+
+      if similar
+        it "finds #{a.path} and #{b.path} similar" do
+          expect(a % b).to be > 0.8
+        end
+      else
+        it "finds #{a.path} and #{b.path} not similar" do
+          expect(a % b).to be <= 0.5
         end
       end
-    end
 
-    it "should return same similarity if swapping instances" do
-      collection.combination(2) do |a, b|
-        (a % b).should == (b % a)
+      it 'returns same result when switching arguments' do
+        expect(a % b).to eq(b % a)
       end
     end
   end
-
-  describe :Audio do
-    let(:collection){ Phash::Audio.for_paths filenames('*.mp3') }
-    include_examples :similarity
-  end
-
-  describe :Image do
-    let(:collection){ Phash::Image.for_paths filenames('**/*.{jpg,png}') }
-    include_examples :similarity
-  end
-
-  describe :Text do
-    let(:collection){ Phash::Text.for_paths filenames('*.txt') }
-    include_examples :similarity
-  end
-
-  # describe :Video do
-  #   let(:collection){ Phash::Video.for_paths filenames('*.mp4') }
-  #   include_examples :similarity
-  # end
 end
