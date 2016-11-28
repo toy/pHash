@@ -7,6 +7,10 @@ module Phash
       @data = data
       @length = length if length
     end
+
+    def inspect
+      "#<#{self.class.name} #{to_s}>"
+    end
   end
 
   class HashData < Data

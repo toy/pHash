@@ -83,6 +83,14 @@ module Phash
 
   # Class to store text hash and compare to other
   class TextHash < HashData
+  private
+
+    def to_s
+      length.times.map do |i|
+        p = TxtHashPoint.new(data + TxtHashPoint.size * i)
+        format('%016x(%i)', p[:hash], p[:index])
+      end.join(' ')
+    end
   end
 
   # Class to store text file hash and compare to other

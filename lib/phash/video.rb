@@ -39,6 +39,11 @@ module Phash
 
   # Class to store video hash and compare to other
   class VideoHash < HashData
+  private
+
+    def to_s
+      data.read_array_of_type(:uint64, :read_uint64, length).map{ |n| format('%016x', n) }.join(' ')
+    end
   end
 
   # Class to store video file hash and compare to other

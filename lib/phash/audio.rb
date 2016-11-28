@@ -111,6 +111,11 @@ module Phash
 
   # Class to store audio hash and compare to other
   class AudioHash < HashData
+  private
+
+    def to_s
+      data.read_array_of_type(:uint32, :read_uint32, length).map{ |n| format('%08x', n) }.join(' ')
+    end
   end
 
   # Class to store audio file hash and compare to other

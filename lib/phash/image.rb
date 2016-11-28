@@ -45,6 +45,11 @@ module Phash
 
   # Class to store image hash and compare to other
   class ImageHash < HashData
+  private
+
+    def to_s
+      format('%016x', data)
+    end
   end
 
   # Class to store image file hash and compare to other
