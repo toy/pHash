@@ -21,6 +21,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
 
   if Gem::Platform.local.os == 'darwin'
-    s.post_install_message = "If you do not have pHash library installed yet, run this:\n\tbrew install --without-video-hash homebrew/boneyard/phash"
+    s.post_install_message = "pHash library can be installed using macports or brew:
+\tport install pHash
+\tbrew install --without-video-hash homebrew/boneyard/phash"
   end
 end
