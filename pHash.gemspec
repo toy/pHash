@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'ffi', '~> 1.0'
 
-  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rspec', '~> 3.0'
 
   if Gem::Platform.local.os == 'darwin'
     s.post_install_message = "pHash library can be installed using macports or brew:
