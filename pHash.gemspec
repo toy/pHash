@@ -10,6 +10,12 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = s.name
 
+  s.metadata = {
+    'bug_tracker_uri'   => "https://github.com/toy/#{s.name}/issues",
+    'documentation_uri' => "https://www.rubydoc.info/gems/#{s.name}/#{s.version}",
+    'source_code_uri'   => "https://github.com/toy/#{s.name}",
+  }
+
   s.files         = `git ls-files`.split($/)
   s.executables   = s.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
