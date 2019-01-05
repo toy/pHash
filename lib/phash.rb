@@ -61,7 +61,7 @@ module Phash
   extend FFI::Library
 
   begin
-    ffi_lib 'pHash'
+    ffi_lib ENV.fetch('PHASH_LIB', 'pHash')
   rescue LoadError => e
     raise LoadError, "Specify path to pHash library using PHASH_LIB environment variable. #{e.message}"
   end
