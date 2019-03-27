@@ -19,7 +19,7 @@ module Phash
     end
 
     def self.hash_type
-      @hash_type ||= self.name.split('::').last.sub(/Hash$/, '').downcase
+      @hash_type ||= self.name.split('::').last.sub(/Hash$/, '').gsub(/(\p{Lower})(\p{Upper})/, '\1_\2').downcase
     end
   end
 
@@ -54,11 +54,12 @@ module Phash
     alias_method :%, :similarity
 
     def self.hash_type
-      @hash_type ||= self.name.split('::').last.downcase
+      @hash_type ||= self.name.split('::').last.gsub(/(\p{Lower})(\p{Upper})/, '\1_\2').downcase
     end
   end
 
   extend FFI::Library
+  ffi_lib FFI::Library::LIBC
 
   begin
     ffi_lib ENV.fetch('PHASH_LIB', 'pHash')
