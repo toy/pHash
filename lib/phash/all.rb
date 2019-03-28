@@ -1,4 +1,5 @@
 require 'phash/audio'
 require 'phash/image'
+require 'phash/mh_image'
 require 'phash/text'
 require 'phash/video'
